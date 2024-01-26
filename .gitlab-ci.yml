@@ -1,0 +1,45 @@
+stages:
+  - build
+  - deploy 
+
+cache: 
+  paths:
+    - node_modules/
+
+build-staging:
+  image: docker:20.10.8
+  stage: build
+  before_script:
+  - mkdir -p /certs
+  - echo "$ca" | tr -d '\r' > /certs/ca.pem
+  - echo "$cert" | tr -d '\r' > /certs/cert.pem
+  - echo "$key" | tr -d '\r' > /certs/key.pem
+  variables:
+    public_url: https://krs.ujiaplikasi.com
+    backend_url: https://api-krs.ujiaplikasi.com
+  script:
+    - docker build --build-arg DISABLE_V8_COMPILE_CACHE=1 --build-arg NEXT_PUBLIC_FRONTEND_URL=$public_url --build-arg NEXT_PUBLIC_BACKEND_URL=$backend_url -t fe-krs-pupr:latest .
+    - docker save -o arch.tar fe-krs-pupr:latest
+    - docker --tlsverify --tlscacert=/certs/ca.pem --tlscert=/certs/cert.pem --tlskey=/certs/key.pem  -H $DEPLOY_DOCKER_HOST load -i arch.tar
+  only:
+    - /^staging_[0-9]+(?:.[0-9]+)+$/
+
+deploy-staging:
+  image: docker:20.10.8
+  stage: deploy
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_CERT_PATH: "/certs"
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_HOST: $DEPLOY_DOCKER_HOST
+  before_script:
+  - mkdir -p /certs
+  - echo "$ca" | tr -d '\r' > /certs/ca.pem
+  - echo "$cert" | tr -d '\r' > /certs/cert.pem
+  - echo "$key" | tr -d '\r' > /certs/key.pem
+  script:
+  - docker rm -f fe-krs-pupr
+  - docker run -d --name fe-krs-pupr --restart always --label app=true --label traefik.enable=true --label traefik.http.routers.fe-krs-pupr.entrypoints=web --label traefik.http.routers.fe-krs-pupr.rule=Host\(\`krs.ujiaplikasi.com\`\) --label traefik.http.services.fe-krs-pupr.loadbalancer.server.port=3000  --network my-network  fe-krs-pupr:latest
+  only:
+    - /^staging_[0-9]+(?:.[0-9]+)+$/
+

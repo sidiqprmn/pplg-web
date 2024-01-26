@@ -1,0 +1,19 @@
+.mapIndo {
+  :global {
+    #nasional {
+      path {
+        fill: #72a5e2;
+      }
+    }
+  }
+}
+
+.popoverTitle {
+  :global {
+    .ant-card-head-title {
+      white-space: normal;
+      margin: 24px 0;
+      height: 48px;
+    }
+  }
+}

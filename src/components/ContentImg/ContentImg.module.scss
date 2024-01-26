@@ -1,0 +1,22 @@
+
+.bg-house-login::after {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 1018px;
+  background: linear-gradient(to bottom, #153b77 53%, rgba(1, 74, 164, 0.657) 100%);
+  position: absolute;
+  top: 0;
+}
+
+
+.bg-house-daftar::after {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 1449px;
+  background: linear-gradient(to bottom, #305786  61.7%, rgba(32, 77, 132, 0.0) 100%);
+  position: absolute;
+  top: 0;
+}
+

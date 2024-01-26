@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Lexend', sans-serif !important;
+  font-family: 'Alex Brush', cursive;
+}
+body {
+  background-color: #f5f8fa;
+}
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  line-height: 25px;
+}
+
+/* swiper css */
+.swiper-pagination-bullet-active-main,
+.swiper-pagination-bullet-active-prev,
+.swiper-pagination-bullet-active-next {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #14437c !important;
+}
+
+.ant-popover-inner {
+  padding: 0px !important;
+  border-radius: 12px !important;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 40px;
+  align-items: center;
+}
+
+
+/* dots element */
+@media (min-width: 320px) and (max-width: 767px) {
+  .hidden-dots {
+    display: none !important;
+  }
+}
