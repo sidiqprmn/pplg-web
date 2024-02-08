@@ -115,6 +115,9 @@ const fetchData = ({ param1, param2 }) => {
 }
 ```
 
+
+
+
 4. Code naming conventions:
    It's important to follow consistent naming conventions to make your code more readable. Here are some common conventions:
 
